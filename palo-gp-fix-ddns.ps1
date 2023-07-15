@@ -1,7 +1,7 @@
 # Requires admin permissions for SetDynamicDNSRegistration and Register-DnsClient
-# On-prem domains distributed via DHCP
+# On-prem domains distributed via DHCP !!! Change me !!!
 $OnPremDomains = @('example.com', 'example.org', 'example.local')
-# Get all IP enabled adapters
+# Get all IP-enabled adapters
 $ActiveAdapters = Get-WmiObject Win32_NetworkAdapterConfiguration -filter 'ipenabled = true'
 # Disable DDNS for all the adapters
 ForEach($Adapter in $ActiveAdapters) {$Adapter.SetDynamicDNSRegistration($False)}
