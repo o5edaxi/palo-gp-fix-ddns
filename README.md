@@ -6,7 +6,7 @@ A common issue when running any VPN Client is that Windows endpoints may update 
 
 This Powershell script does the following:
 
-- Identify all IP enabled adapters
+- Identify all IP-enabled adapters
 - Identify those that have a company DNS domain received via DHCP, to determine whether the endpoint is on-prem or off-prem
 - If there are any, enable "Register this connection's addresses in DNS" only for them, and disable it for the PANGP adapter
 - If there are none, enable it only for the PANGP adapter
