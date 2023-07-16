@@ -6,9 +6,9 @@ $ActiveAdapters = Get-WmiObject Win32_NetworkAdapterConfiguration -filter 'ipena
 # Disable DDNS for all the adapters
 ForEach($Adapter in $ActiveAdapters) {$Adapter.SetDynamicDNSRegistration($False)}
 # Find PAN GP adapter
-$GPAdapter = $ActiveAdapters | Where-Object {$_.Description -eq 'PANGPVirtual Ethernet Adapter Secure'}
+$GPAdapter = $ActiveAdapters | Where-Object {$_.Description -eq 'PANGP Virtual Ethernet Adapter Secure'}
 # Find adapters with the on-prem domain name
-$NICsOnPrem = $ActiveAdapters | Where-Object {$_.DNSDomain -in $OnPremDomains} | Where-Object {$_.Description -ne 'PANGPVirtual Ethernet Adapter Secure'}
+$NICsOnPrem = $ActiveAdapters | Where-Object {$_.DNSDomain -in $OnPremDomains} | Where-Object {$_.Description -ne 'PANGP Virtual Ethernet Adapter Secure'}
 # Enable DDNS on physical adapters or the PAN GP depending on if pc is on-prem or not
 If ($NICsOnPrem) {ForEach($Adapter in $NICsOnPrem) {$Adapter.SetDynamicDNSRegistration($True)}} ElseIf ($GPAdapter) {$GPAdapter.SetDynamicDNSRegistration($True)}
 # Run ipconfig /registerdns
