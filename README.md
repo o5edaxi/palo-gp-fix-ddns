@@ -12,7 +12,7 @@ This Powershell script does the following:
 - If there are none, enable it only for the PANGP adapter
 - Force an ipconfig /registerdns
 
-Thanks to [Deploy Scripts Using the Windows Registry](https://docs.paloaltonetworks.com/globalprotect/9-1/globalprotect-admin/globalprotect-apps/deploy-app-settings-transparently/deploy-app-settings-to-windows-endpoints/deploy-scripts-using-the-windows-registry) feature of Palo Alto GlobalProtect, the script can be run after each GlobalProtect login. Conver the script into a single-line batch like the following:
+Thanks to [Deploy Scripts Using the Windows Registry](https://docs.paloaltonetworks.com/globalprotect/9-1/globalprotect-admin/globalprotect-apps/deploy-app-settings-transparently/deploy-app-settings-to-windows-endpoints/deploy-scripts-using-the-windows-registry) feature of Palo Alto GlobalProtect, the script can be run after each GlobalProtect login. Convert the script into a single-line batch like the following:
 
 ```powershell -Command "$OnPremDomains = @('example.com', 'example.org', 'example.local') ; $ActiveAdapters = Get-WmiObject Win32_NetworkAdapterConfiguration -filter 'ipenabled = true' ; ForEach($Adapter in $ActiveAdapters) {$Adapter.SetDynamicDNSRegistration($False)} ; $GPAdapter = $ActiveAdapters | Where-Object {$_.Description -eq 'PANGPVirtual Ethernet Adapter Secure'} ; $NICsOnPrem = $ActiveAdapters | Where-Object {$_.DNSDomain -in $OnPremDomains} | Where-Object {$_.Description -ne 'PANGPVirtual Ethernet Adapter Secure'} ; If ($NICsOnPrem) {ForEach($Adapter in $NICsOnPrem) {$Adapter.SetDynamicDNSRegistration($True)}} ElseIf ($GPAdapter) {$GPAdapter.SetDynamicDNSRegistration($True)} ; Register-DnsClient ;"```
 
